@@ -1,0 +1,45 @@
+# ==============================
+# Maven
+# ==============================
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+
+# ==============================
+# Spring Boot
+# ==============================
+# Hassas bilgiler — ASLA commit'lenmesin
+**/src/main/resources/application-local.yml
+**/src/main/resources/application-prod.yml
+**/src/main/resources/application-railway.yml
+.env
+.env.*
+!.env.example
+
+# ==============================
+# IntelliJ IDEA
+# ==============================
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# ==============================
+# macOS
+# ==============================
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# ==============================
+# Logs
+# ==============================
+*.log
+logs/

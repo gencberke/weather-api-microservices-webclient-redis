@@ -1,6 +1,5 @@
 package com.berkedev.weather.user.data.dto.response;
 
-import com.berkedev.weather.user.data.enums.Role;
 import lombok.*;
 
 @Getter

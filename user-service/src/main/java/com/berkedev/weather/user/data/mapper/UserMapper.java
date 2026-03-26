@@ -12,7 +12,6 @@ public interface UserMapper {
     @Mapping(target = "role", expression = "java(user.getRole() != null ? user.getRole().name() : null)")
     UserResponse toResponse(User user);
 
-    @Mapping(target = "password", ignore = true)
     @Mapping(target = "role", ignore = true)
     @Mapping(target = "unit", ignore = true)
     @Mapping(target = "favoriteCities", ignore = true)

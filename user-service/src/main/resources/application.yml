@@ -10,3 +10,6 @@ spring:
 
 server:
   port: 8081
+
+jwt:
+  secret: uWag635270p6X5gim4yQnwkbPu0h2A6LvYFBtx9cFny

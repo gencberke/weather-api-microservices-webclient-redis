@@ -8,6 +8,7 @@ import com.berkedev.weather.user.data.repository.UserRepository;
 import com.berkedev.weather.user.exception.BadRequestException;
 import com.berkedev.weather.user.exception.DuplicateResourceException;
 import com.berkedev.weather.user.exception.ResourceNotFoundException;
+import com.berkedev.weather.user.security.JwtService;
 import com.berkedev.weather.user.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,6 +21,7 @@ public class AuthServiceImpl implements AuthService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
     @Override
     public AuthResponse register(RegLogRequest request) {
@@ -32,7 +34,7 @@ public class AuthServiceImpl implements AuthService {
         userRepository.save(newUser);
 
         return AuthResponse.builder()
-                .token("place_holder_token")
+                .token(jwtService.generateToken(newUser))
                 .role(newUser.getRole().name())
                 .email(newUser.getEmail())
                 .build();
@@ -48,7 +50,7 @@ public class AuthServiceImpl implements AuthService {
         }
 
         return AuthResponse.builder()
-                .token("place_holder_token")
+                .token(jwtService.generateToken(dbUser))
                 .role(dbUser.getRole().name())
                 .email(dbUser.getEmail())
                 .build();

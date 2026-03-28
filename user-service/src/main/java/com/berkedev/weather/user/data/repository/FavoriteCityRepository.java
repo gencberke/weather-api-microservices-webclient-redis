@@ -11,4 +11,6 @@ public interface FavoriteCityRepository extends BaseRepository<FavoriteCity> {
     List<FavoriteCity> findByUserId(Long userId);
 
     boolean existsByCityNameAndUserId(String cityName,Long userId);
+
+    List<FavoriteCity> getFavoriteCitiesById(Long id);
 }

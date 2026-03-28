@@ -1,5 +1,6 @@
 package com.berkedev.weather.user.service.impl;
 
+import com.berkedev.weather.user.data.dto.request.PasswordResetRequest;
 import com.berkedev.weather.user.data.dto.request.RegLogRequest;
 import com.berkedev.weather.user.data.dto.response.AuthResponse;
 import com.berkedev.weather.user.data.entity.User;
@@ -9,14 +10,13 @@ import com.berkedev.weather.user.exception.BadRequestException;
 import com.berkedev.weather.user.exception.DuplicateResourceException;
 import com.berkedev.weather.user.exception.ResourceNotFoundException;
 import com.berkedev.weather.user.security.JwtService;
-import com.berkedev.weather.user.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class AuthServiceImpl implements AuthService {
+public class AuthService implements com.berkedev.weather.user.service.AuthService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
@@ -54,5 +54,18 @@ public class AuthServiceImpl implements AuthService {
                 .role(dbUser.getRole().name())
                 .email(dbUser.getEmail())
                 .build();
+    }
+
+    @Override
+    public Boolean resetPassword(User user, PasswordResetRequest request) {
+
+        if (!passwordEncoder.matches(request.getOldPassword(), user.getPassword())) {
+            throw new BadRequestException("Invalid credentials");
+        }
+
+        user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+        userRepository.save(user);
+
+        return true;
     }
 }

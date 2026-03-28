@@ -1,5 +1,6 @@
 package com.berkedev.weather.user.service.impl;
 
+import com.berkedev.weather.user.data.dto.request.PasswordResetRequest;
 import com.berkedev.weather.user.data.dto.request.RegLogRequest;
 import com.berkedev.weather.user.data.dto.response.AuthResponse;
 import com.berkedev.weather.user.data.entity.User;
@@ -54,5 +55,20 @@ public class AuthServiceImpl implements AuthService {
                 .role(dbUser.getRole().name())
                 .email(dbUser.getEmail())
                 .build();
+    }
+
+    @Override
+    public Boolean resetPassword(PasswordResetRequest request) {
+        User dbUser = userRepository.findUserByEmail(request.getEmail())
+                .orElseThrow(() -> new ResourceNotFoundException("Email Can't Found"));
+
+        if (!passwordEncoder.matches(request.getOldPassword(), dbUser.getPassword())) {
+            throw new BadRequestException("Invalid credentials");
+        }
+
+        dbUser.setPassword(passwordEncoder.encode(request.getNewPassword()));
+        userRepository.save(dbUser);
+
+        return true;
     }
 }

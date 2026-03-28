@@ -10,14 +10,13 @@ import com.berkedev.weather.user.exception.BadRequestException;
 import com.berkedev.weather.user.exception.DuplicateResourceException;
 import com.berkedev.weather.user.exception.ResourceNotFoundException;
 import com.berkedev.weather.user.security.JwtService;
-import com.berkedev.weather.user.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class AuthServiceImpl implements AuthService {
+public class AuthService implements com.berkedev.weather.user.service.AuthService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
@@ -58,16 +57,14 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public Boolean resetPassword(PasswordResetRequest request) {
-        User dbUser = userRepository.findUserByEmail(request.getEmail())
-                .orElseThrow(() -> new ResourceNotFoundException("Email Can't Found"));
+    public Boolean resetPassword(User user, PasswordResetRequest request) {
 
-        if (!passwordEncoder.matches(request.getOldPassword(), dbUser.getPassword())) {
+        if (!passwordEncoder.matches(request.getOldPassword(), user.getPassword())) {
             throw new BadRequestException("Invalid credentials");
         }
 
-        dbUser.setPassword(passwordEncoder.encode(request.getNewPassword()));
-        userRepository.save(dbUser);
+        user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+        userRepository.save(user);
 
         return true;
     }

@@ -1,10 +1,7 @@
 package com.berkedev.weather.user.service.impl;
 
-import com.berkedev.weather.user.data.dto.request.RegLogRequest;
-import com.berkedev.weather.user.data.dto.response.UserResponse;
 import com.berkedev.weather.user.data.mapper.UserMapper;
 import com.berkedev.weather.user.data.repository.UserRepository;
-import com.berkedev.weather.user.exception.DuplicateResourceException;
 import com.berkedev.weather.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,5 +12,5 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
-    private final AuthServiceImpl authService;
+    private final AuthService authService;
 }

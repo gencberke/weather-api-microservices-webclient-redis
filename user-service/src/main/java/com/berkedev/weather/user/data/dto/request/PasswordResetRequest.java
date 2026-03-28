@@ -15,12 +15,9 @@ import lombok.NoArgsConstructor;
 public class PasswordResetRequest {
 
     @NotBlank
-    @Email
-    private String email;
-
-    @NotBlank
     private String oldPassword;
 
     @Size(min = 8, message = "Password must be at least 8 character long")
+    @NotBlank
     private String newPassword;
 }

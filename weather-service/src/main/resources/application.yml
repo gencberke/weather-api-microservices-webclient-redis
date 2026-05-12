@@ -2,11 +2,10 @@ spring:
   application:
     name: weather-service
 
-  autoconfigure:
-    exclude:
-      - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
-      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
-      - org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
+remote-api:
+  weather-api:
+    base-url: https://api.openweathermap.org/data/2.5
+    api-key: ${WEATHER_API_KEY}
 
 server:
   port: 8082
